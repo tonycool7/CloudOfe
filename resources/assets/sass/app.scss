@@ -2,11 +2,17 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
+//font-awesome
+@import '~font-awesome/scss/font-awesome.scss';
+
 // Variables
 @import "variables";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+//owl-carousel
+@import "~owl.carousel/src/scss/owl.carousel.scss";
 
 .navbar-laravel {
   background-color: #fff;

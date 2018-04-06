@@ -1,3 +1,126 @@
-h2 {
-  color: red;
+.login-container {
+  right: 0px;
+  height: 58pt;
+  width: 187pt;
+}
+.login-container .login {
+  font-size: 21pt;
+  width: 159pt;
+  height: 33pt;
+  color: black;
+  text-decoration: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.logo-container .logo {
+  font-size: 35pt;
+  text-decoration: none;
+  display: block;
+  padding-left: 72pt;
+}
+.quotes-container {
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 2px 9.4px 0.6px rgba(0, 0, 0, 0.44);
+          box-shadow: 0px 2px 9.4px 0.6px rgba(0, 0, 0, 0.44);
+  min-height: 343px;
+  padding-top: 10pt;
+}
+.quotes-container .quote-content {
+  margin-bottom: 15pt;
+}
+.quotes-container .quote-text-container {
+  padding: 0px;
+}
+.quotes-container .quote-text-container h4 {
+  margin-bottom: 1pt;
+  font-weight: bold;
+  font-size: 10pt;
+}
+.quotes-container .quote-text-container p {
+  line-height: 1.3;
+  font-size: 10pt;
+  margin: 0px;
+  padding-right: 2pt;
+}
+.custom-hr {
+  width: 100%;
+  margin-top: 62pt;
+}
+.register-container-header,
+.register-container-footer {
+  max-width: 300pt;
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+.register {
+  margin-top: 90pt;
+}
+.intro-block {
+  margin: 60pt auto;
+  max-width: 900px;
+  width: 100%;
+  height: 277pt;
+}
+.intro-block .intro-box {
+  max-width: 300px;
+  width: 100%;
+  height: 277pt;
+  background-color: #e1e1e1;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  float: left;
+}
+.intro-block .intro-box:hover {
+  position: relative;
+  z-index: 2;
+  -webkit-box-shadow: 0px 0px 23.25px 1.75px rgba(0, 0, 0, 0.45);
+          box-shadow: 0px 0px 23.25px 1.75px rgba(0, 0, 0, 0.45);
+}
+.col-my-5 {
+  width: 20%;
+  float: left;
+}
+.footer-title {
+  font-size: 16pt;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
+  color: rgba(255, 255, 255, 0.251);
+}
+.footer-list {
+  padding: 0px;
+  list-style: none;
+}
+.footer-list li a {
+  text-decoration: none;
+  font-size: 13pt;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.251);
+  font-weight: bold;
+  line-height: 1.667;
+}
+footer {
+  height: 352.8pt;
+  background-color: #081631;
+  width: 100%;
+  position: relative;
+}
+footer .footer-container {
+  display: inline-block;
+  height: 168pt;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
