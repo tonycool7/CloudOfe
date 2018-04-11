@@ -13401,7 +13401,7 @@ a.text-dark:focus {
   float: left;
 }
 .footer-title {
-  font-size: 16pt;
+  font-size: 14pt;
   font-family: Tahoma, Helvetica, Arial, sans-serif;
   font-weight: bold;
   text-decoration: underline;
@@ -13413,7 +13413,7 @@ a.text-dark:focus {
 }
 .footer-list li a {
   text-decoration: none;
-  font-size: 13pt;
+  font-size: 12pt;
   font-family: Tahoma, Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.251);
   font-weight: bold;
@@ -13429,7 +13429,6 @@ footer .footer-container {
   display: inline-block;
   height: 168pt;
   width: 100%;
-  max-width: 700px;
   margin: auto;
   position: absolute;
   top: 0;
