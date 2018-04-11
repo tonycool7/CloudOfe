@@ -37,6 +37,8 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+    protected $redirectAfterVerification = '/home';
+
     /**
      * Create a new controller instance.
      *
