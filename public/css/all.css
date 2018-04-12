@@ -13311,6 +13311,9 @@ a.text-dark:focus {
 }
 
 
+body {
+  background-color: white;
+}
 .login-container {
   right: 0px;
   height: 58pt;
@@ -13329,6 +13332,26 @@ a.text-dark:focus {
   left: 0;
   right: 0;
   margin: auto;
+}
+.py-content {
+  margin-top: 160px;
+  margin-bottom: 160px;
+}
+.navbar-nav {
+  margin: 0px;
+}
+.main-header {
+  top: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  height: 76px;
+  z-index: 99;
+  background-color: #fff;
+  border-bottom: 1px solid #d0d4d9;
+  -webkit-box-shadow: 0px 1px 1px #d0d4d9;
+  box-shadow: 0px 1px 1px #d0d4d9;
 }
 .logo-container .logo {
   font-size: 35pt;
