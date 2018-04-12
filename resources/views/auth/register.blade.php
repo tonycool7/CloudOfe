@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <img class="login-page-img" src="/images/brand/company-logo.png" alt="Keep your files in one place (Cloudofe)">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 login-form">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 

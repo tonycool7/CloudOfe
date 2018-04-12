@@ -13437,6 +13437,9 @@ body {
   text-decoration: underline;
   color: rgba(255, 255, 255, 0.251);
 }
+.btn-primary {
+  background-color: #426cb4;
+}
 .footer-list {
   padding: 0px;
   list-style: none;
