@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-6 col-sm-6 col-lg-6 register-container">
-                    <h4 class="register-container-header">sign up to get your
-                        business in the cloudofe</h4>
+                    <h1 class="register-container-header">sign up to get your
+                        business in the cloudofe</h1>
                     <hr/>
                     <form class="form form-horizontal" method="POST" action="{{route('register')}}">
                         @csrf
@@ -96,9 +96,9 @@
                             <br/>
                             <br/>
                             <br/>
-                            <h4 class="register-container-footer">by signing up, you agree to our terms
+                            <h2 class="register-container-footer">by signing up, you agree to our terms
                                 and privacy policy
-                            </h4>
+                            </h2>
                         </div>
 
                     </form>
@@ -152,10 +152,20 @@
         <section class="container">
             <div class="intro-block">
                 <div class="intro-box">
-
+                    <div class="intro-icon">
+                        <i class="fa fa-share"></i>
+                    </div>
+                    <div class="intro-text">
+                        <p>put your work in one place</p>
+                    </div>
                 </div>
                 <div class="intro-box">
-
+                    <div class="intro-icon">
+                        <i class="fa fa-file-video-o"></i>
+                    </div>
+                    <div class="intro-text">
+                        <p>the team video / video of the week</p>
+                    </div>
                 </div>
                 <div class="intro-box">
 

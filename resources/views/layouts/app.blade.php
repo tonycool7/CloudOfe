@@ -23,14 +23,14 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="{{mix('css/all.css')}}">
+    <link type="icon/png" href="/images/brand/logo_icon.png" rel="icon">
 </head>
 <body>
     <div id="app">
-        <header class="main-header">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+            <nav class="main-header navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name') }}
+                        <img src="{{asset('/images/brand/logo1.png')}}" title="Cloudofe" alt="CloudOfe">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -47,7 +47,7 @@
                             <!-- Authentication Links -->
                             @guest
                                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                                {{--<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>--}}
+                                <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -71,7 +71,6 @@
                     </div>
                 </div>
             </nav>
-        </header>
 
         <main class="py-4 py-content">
             @yield('content')

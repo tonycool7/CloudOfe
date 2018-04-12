@@ -13333,9 +13333,18 @@ body {
   right: 0;
   margin: auto;
 }
+.login-form .card {
+  border: none ! important;
+}
+.nav-link {
+  font-size: 20pt;
+}
+.login-page-img {
+  width: 100%;
+}
 .py-content {
-  margin-top: 160px;
-  margin-bottom: 160px;
+  margin-top: 200px;
+  margin-bottom: 80px;
 }
 .navbar-nav {
   margin: 0px;
@@ -13346,7 +13355,7 @@ body {
   left: 0;
   overflow: hidden;
   position: fixed;
-  height: 76px;
+  height: 126px;
   z-index: 99;
   background-color: #fff;
   border-bottom: 1px solid #d0d4d9;
@@ -13394,9 +13403,7 @@ body {
   text-align: center;
   display: block;
   margin: auto;
-}
-.register {
-  margin-top: 90pt;
+  font-size: 20pt;
 }
 .intro-block {
   margin: 60pt auto;
@@ -13437,7 +13444,7 @@ body {
 .footer-list li a {
   text-decoration: none;
   font-size: 12pt;
-  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.251);
   font-weight: bold;
   line-height: 1.667;
