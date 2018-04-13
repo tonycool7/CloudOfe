@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <example-component></example-component>
     {{--Register section--}}
         <section class="container register">
             <div class="row">
@@ -151,7 +152,7 @@
 
         <section class="container">
             <div class="intro-block row">
-                <div class="col-sm-4">
+                <div class="col-md-4">
                     <div class="intro-box">
                         <div class="intro-icon">
                             <i class="fa fa-share"></i>
@@ -161,21 +162,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-
-                <div class="intro-box">
-                    <div class="intro-icon">
-                        <i class="fa fa-file-video-o"></i>
-                    </div>
-                    <div class="intro-text">
-                        <p>the team video / video of the week</p>
+                <div class="col-md-4">
+                    <div class="intro-box">
+                        <div class="intro-icon">
+                            <i class="fa fa-file-video-o"></i>
+                        </div>
+                        <div class="intro-text">
+                            <p>the team video / video of the week</p>
+                        </div>
                     </div>
                 </div>
-                </div>
-                <div class="col-sm-4">
-
-                <div class="intro-box">
-
+                <div class="col-md-4">
+                    <div class="intro-box">
                 </div>
                 </div>
             </div>
