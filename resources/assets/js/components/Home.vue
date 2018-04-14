@@ -47,7 +47,9 @@
                     </table>
                 </div>
                 <div class="col-sm-2 home-right-menu">
-                    <form method="post" action="" >
+                    <form method="post" action="/" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" :value="csrf">
+                        <input type="file" name="file" class="btn btn-primary btn-block">
                         <button class="btn btn-primary btn-block">Upload</button>
                     </form>
                 </div>

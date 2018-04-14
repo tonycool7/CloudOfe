@@ -1726,6 +1726,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -36386,7 +36388,33 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(3)
+        _c("div", { staticClass: "col-sm-2 home-right-menu" }, [
+          _c(
+            "form",
+            {
+              attrs: {
+                method: "post",
+                action: "/",
+                enctype: "multipart/form-data"
+              }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "btn btn-primary btn-block",
+                attrs: { type: "file", name: "file" }
+              }),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-primary btn-block" }, [
+                _vm._v("Upload")
+              ])
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -36443,18 +36471,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Members")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action "), _c("i", { staticClass: "fa fa-list" })])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-2 home-right-menu" }, [
-      _c("form", { attrs: { method: "post", action: "" } }, [
-        _c("button", { staticClass: "btn btn-primary btn-block" }, [
-          _vm._v("Upload")
-        ])
       ])
     ])
   }
