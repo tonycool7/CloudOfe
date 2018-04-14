@@ -23,6 +23,8 @@ Route::get('/resend_email_verification', 'Auth\RegisterController@resendVerifica
 
 Route::view('/nonactivated', 'error.nonactivated');
 
+Route::resource('/files', 'FilesController');
+
 Route::get('/email-verification/error', 'Auth\RegisterController@getVerificationError')->name('email-verification.error');
 
 Route::get('/email-verification/check/{token}', 'Auth\RegisterController@getVerification')->name('email-verification.check');

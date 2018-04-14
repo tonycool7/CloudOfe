@@ -23,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $files = [
+            [
+                'name' => 'name.txt',
+                'modified' => '04/04/2018 16:00',
+                'members' => '2 members'
+            ]
+        ];
+        return view('home', compact('files'));
     }
 }

@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <example-component></example-component>
     {{--Register section--}}
         <section class="container register">
             <div class="row">
