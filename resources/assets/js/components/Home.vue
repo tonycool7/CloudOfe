@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-2 home-left-menu">
             <img src="/images/brand/logo_icon.png" alt="Cloudofe"><br/><br/>
-            <h2>Files</h2><br/>
+            <h2 class="left-menu__title">Files</h2>
             <div class="left-menu__links">
                 <a href="/my_files">My Files</a>
                 <a href="/sharing">Sharing</a>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="col-sm-10 home-files">
-            <h2>Cloudofe
+            <h2><span class="home-files__title">Cloudofe</span>
             <div class="dropdown pull-right">
                 <i class="fa fa-user-circle text-primary dropdown-toggle" data-toggle="dropdown"></i>
                 <div aria-labelledby="navbarDropdown" class="dropdown-menu">
@@ -30,10 +30,10 @@
                     <table class="table files-table">
                         <thead>
                             <tr>
-                                <th>Name <i class="fa fa-arrow-up"></i></th>
-                                <th>Modified <i class="fa fa-caret-down"></i></th>
-                                <th>Members</th>
-                                <th>Action <i class="fa fa-list"></i></th>
+                                <th><span>Name</span> <i class="fa fa-arrow-up"></i></th>
+                                <th><span>Modified</span> <i class="fa fa-caret-down"></i></th>
+                                <th><span>Members</span></th>
+                                <th><i class="fa fa-list"></i></th>
                             </tr>
                         </thead>
                         <tbody>

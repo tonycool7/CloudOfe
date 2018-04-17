@@ -13314,6 +13314,9 @@ a.text-dark:focus {
 body {
   background-color: white;
 }
+.text-primary {
+  color: #426cb4 ! important;
+}
 .login-container {
   right: 0px;
   height: 58pt;
@@ -13344,7 +13347,7 @@ body {
 }
 .py-content {
   margin-top: 200px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 .navbar-nav {
   margin: 0px;
@@ -13369,8 +13372,8 @@ body {
 }
 .quotes-container {
   background-color: #ffffff;
-  -webkit-box-shadow: 0px 2px 9.4px 0.6px rgba(0, 0, 0, 0.44);
-          box-shadow: 0px 2px 9.4px 0.6px rgba(0, 0, 0, 0.44);
+  -webkit-box-shadow: 0px 2px 9.4px 0.6px #1e73be7a;
+          box-shadow: 0px 2px 9.4px 0.6px #1e73be7a;
   min-height: 343px;
   padding-top: 10pt;
 }
@@ -13410,19 +13413,25 @@ body {
   width: 100%;
 }
 .intro-block .intro-box {
+  padding: 45px 10px 10px 10px;
   margin: auto;
   width: 100%;
-  height: 277pt;
+  height: 200pt;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   float: left;
-  border: 1px solid #d0d4d9;
+  border: 1px solid rgba(108, 117, 125, 0.16);
+}
+.intro-block .intro-box .intro-text {
+  font-size: 18px;
+  text-align: center;
+  padding-top: 30px;
 }
 .intro-block .intro-box:hover {
   position: relative;
   z-index: 2;
-  -webkit-box-shadow: 0px 0px 23.25px 1.75px rgba(0, 0, 0, 0.45);
-          box-shadow: 0px 0px 23.25px 1.75px rgba(0, 0, 0, 0.45);
+  -webkit-box-shadow: 0px 0px 23.25px 1.75px #1e73be42;
+          box-shadow: 0px 0px 23.25px 1.75px #1e73be42;
 }
 .col-my-5 {
   width: 20%;
@@ -13467,20 +13476,34 @@ footer .footer-container {
   left: 0;
   right: 0;
 }
+.home-files__title {
+  font-size: 25px;
+}
+.left-menu__title {
+  font-size: 25px;
+  margin-bottom: 18px;
+}
 .home-left-menu {
   padding: 40px 0px 0px 30px;
   position: fixed;
   height: 100vh;
-  background-color: #f3f3f3;
+  background-color: #F7F9FA;
 }
 .left-menu__links a {
   display: block;
+  font-size: 14px;
+  line-height: 2;
+  text-decoration: none;
 }
 .muted {
   color: #637282;
 }
 .files-table thead th {
   color: #637282;
+}
+.files-table thead th span,
+.files-table thead th i {
+  cursor: pointer;
 }
 .files-table tr {
   border-bottom: 1px solid #8080802b;

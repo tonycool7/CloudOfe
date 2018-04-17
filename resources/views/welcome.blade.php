@@ -152,8 +152,8 @@
             <div class="intro-block row">
                 <div class="col-md-4">
                     <div class="intro-box">
-                        <div class="intro-icon">
-                            <i class="fa fa-share"></i>
+                        <div class="intro-icon text-center">
+                            <i class="fa fa-folder-open-o fa-5x text-primary"></i>
                         </div>
                         <div class="intro-text">
                             <p>put your work in one place</p>
@@ -162,8 +162,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="intro-box">
-                        <div class="intro-icon">
-                            <i class="fa fa-file-video-o"></i>
+                        <div class="intro-icon text-center">
+                            <i class="fa fa-video-camera fa-5x text-primary"></i>
                         </div>
                         <div class="intro-text">
                             <p>the team video / video of the week</p>
@@ -172,7 +172,13 @@
                 </div>
                 <div class="col-md-4">
                     <div class="intro-box">
-                </div>
+                        <div class="intro-icon text-center">
+                            <i class="fa fa-file-archive-o fa-5x text-primary"></i>
+                        </div>
+                        <div class="intro-text">
+                            <p>the team video / video of the week</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

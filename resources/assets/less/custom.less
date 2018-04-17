@@ -4,6 +4,10 @@ body{
   background-color: white;
 }
 
+.text-primary{
+  color: @custom_color ! important;
+}
+
 .login-container{
   right: 0px;
   height: 58pt;
@@ -40,7 +44,7 @@ body{
 
 .py-content{
   margin-top: 200px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 
 .navbar-nav{
@@ -72,7 +76,7 @@ body{
 
 .quotes-container{
   background-color: rgb(255, 255, 255);
-  box-shadow: 0px 2px 9.4px 0.6px rgba(0, 0, 0, 0.44);
+  box-shadow: 0px 2px 9.4px 0.6px #1e73be7a;
   min-height: 343px;
   padding-top: 10pt;
   .quote-content{
@@ -114,17 +118,25 @@ body{
   width: 100%;
 
   .intro-box{
+    padding: 45px 10px 10px 10px;
     margin: auto;
     width: 100%;
-    height: 277pt;
+    height: 200pt;
     //background-color: rgb(225, 225, 225);
     transition: all .5s ease-in-out;
     float: left;
-    border: 1px solid #d0d4d9;
+    border: 1px solid rgba(108, 117, 125, 0.16);
+
+    .intro-text{
+      font-size: 18px;
+      text-align: center;
+      padding-top: 30px;
+    }
+
     &:hover{
       position: relative;
       z-index: 2;
-      box-shadow: 0px 0px 23.25px 1.75px rgba(0, 0, 0, 0.45);
+      box-shadow: 0px 0px 23.25px 1.75px #1e73be42;
     }
   }
 }
@@ -180,17 +192,29 @@ footer{
   }
 }
 
+.home-files__title{
+  font-size: 25px;
+}
+
+.left-menu__title{
+  font-size: 25px;
+  margin-bottom: 18px;
+}
+
 .home-left-menu{
   padding: 40px 0px 0px 30px;
   position: fixed;
   height: 100vh;
-  background-color: #f3f3f3;
+  background-color: #F7F9FA;
 
 }
 
 .left-menu__links{
   a{
     display: block;
+    font-size: 14px;
+    line-height: 2;
+    text-decoration: none;
   }
 }
 
@@ -202,6 +226,9 @@ footer{
   thead{
     th{
       .muted;
+      span, i{
+        cursor: pointer;
+      }
     }
   }
   tr{

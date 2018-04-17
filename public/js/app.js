@@ -36312,7 +36312,8 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-sm-10 home-files" }, [
       _c("h2", [
-        _vm._v("Cloudofe\n        "),
+        _c("span", { staticClass: "home-files__title" }, [_vm._v("Cloudofe")]),
+        _vm._v(" "),
         _c("div", { staticClass: "dropdown pull-right" }, [
           _c("i", {
             staticClass: "fa fa-user-circle text-primary dropdown-toggle",
@@ -36431,8 +36432,7 @@ var staticRenderFns = [
       _c("br"),
       _c("br"),
       _vm._v(" "),
-      _c("h2", [_vm._v("Files")]),
-      _c("br"),
+      _c("h2", { staticClass: "left-menu__title" }, [_vm._v("Files")]),
       _vm._v(" "),
       _c("div", { staticClass: "left-menu__links" }, [
         _c("a", { attrs: { href: "/my_files" } }, [_vm._v("My Files")]),
@@ -36461,16 +36461,21 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Name "), _c("i", { staticClass: "fa fa-arrow-up" })]),
+        _c("th", [
+          _c("span", [_vm._v("Name")]),
+          _vm._v(" "),
+          _c("i", { staticClass: "fa fa-arrow-up" })
+        ]),
         _vm._v(" "),
         _c("th", [
-          _vm._v("Modified "),
+          _c("span", [_vm._v("Modified")]),
+          _vm._v(" "),
           _c("i", { staticClass: "fa fa-caret-down" })
         ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Members")]),
+        _c("th", [_c("span", [_vm._v("Members")])]),
         _vm._v(" "),
-        _c("th", [_vm._v("Action "), _c("i", { staticClass: "fa fa-list" })])
+        _c("th", [_c("i", { staticClass: "fa fa-list" })])
       ])
     ])
   }
