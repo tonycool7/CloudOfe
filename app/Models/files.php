@@ -17,5 +17,4 @@ class files extends Model
         'size',
         'extension'
     ];
-
 }
