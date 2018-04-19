@@ -56,7 +56,9 @@ return [
         ],
 
         'cloudofe' => [
-            'root' => '/cloudeofe/data',
+            'driver' => 'local',
+            'root' => storage_path('app/public/cloudofe'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 

@@ -8,10 +8,15 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use Jrean\UserVerification\Traits\VerifiesUsers;
+use Jrean\UserVerification\Facades\UserVerification as UserVerificationFacade;
+use Jrean\UserVerification\Exceptions\UserNotFoundException;
+use Jrean\UserVerification\Exceptions\UserIsVerifiedException;
+use Jrean\UserVerification\Exceptions\TokenMismatchException;
 
 class RegisterController extends Controller
 {
@@ -109,5 +114,36 @@ class RegisterController extends Controller
         UserVerification::generate($user);
         UserVerification::send($user, 'Verify your e-mail address');
         return redirect('/home');
+    }
+
+
+    /**
+     * Handle the user verification.
+     *
+     * @param  string  $token
+     * @return \Illuminate\Http\Response
+     */
+    public function getVerification(Request $request, $token)
+    {
+        if (! $this->validateRequest($request)) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        try {
+            $user = UserVerificationFacade::process($request->input('email'), $token, $this->userTable());
+        } catch (UserNotFoundException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        } catch (UserIsVerifiedException $e) {
+            return redirect($this->redirectIfVerified());
+        } catch (TokenMismatchException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        if (config('user-verification.auto-login') === true) {
+            auth()->loginUsingId($user->id);
+        }
+
+        Storage::makeDirectory('/public/cloudofe/'.$user->email);
+        return redirect($this->redirectAfterVerification());
     }
 }
