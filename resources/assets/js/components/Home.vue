@@ -4,27 +4,47 @@
             <img src="/images/brand/logo_icon.png" alt="Cloudofe"><br/><br/>
             <h2 class="left-menu__title">Files</h2>
             <div class="left-menu__links">
-                <a href="/my_files">My Files</a>
+                <a href="/files">My Files</a>
                 <a href="/sharing">Sharing</a>
                 <a href="/file_request">File Request</a>
                 <a href="/deleted_files">Deleted Files</a>
             </div>
         </div>
         <div class="col-sm-10 home-files">
-            <h2><span class="home-files__title">Cloudofe</span>
-            <div class="dropdown pull-right">
-                <i class="fa fa-user-circle text-primary dropdown-toggle" data-toggle="dropdown"></i>
-                <div aria-labelledby="navbarDropdown" class="dropdown-menu">
-                    <a href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">
-                        Logout
-                    </a>
-                    <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                       <input type="hidden" name="_token" :value="csrf">
-                    </form>
+            <h2><span class="home-files__title">Cloudofe</span></h2>
+            <div class="row">
+                <div class="col-sm-3">
+                    <form class="search-files"><input class="" type="text"></form>
+                </div>
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-3">
+                    <div class="dropdown">
+                        <i class="fa fa-user-circle fa-2x text-primary dropdown-toggle" data-toggle="dropdown"></i>
+                        <div aria-labelledby="navbarDropdown" class="dropdown-menu">
+                            <a href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                                <input type="hidden" name="_token" :value="csrf">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <form class="pull-right search-files"><input class="" type="text"></form></h2>
-            <br/><br/>
+            <div class="row">
+                <div class="col-sm-9 alert-container">
+                    <div class="alert alert-success" v-if="msg_success">
+                        {{alert}}
+                    </div>
+                    <div class="alert alert-warning" v-if="msg_error">
+                        {{alert}}
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-10">
                     <table class="table files-table">
@@ -39,18 +59,26 @@
                         <tbody>
                             <tr v-for="file in files">
                                 <td>{{file.name}}</td>
-                                <td>{{file.modified}}</td>
+                                <td>{{file.updated_at}}</td>
                                 <td>{{file.members}}</td>
-                                <td>...</td>
+                                <td  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item text-capitalize" href="#" @click="deleteFile(file.id)">delete</a>
+                                        <a class="dropdown-item text-capitalize" href="#">share</a>
+                                        <a class="dropdown-item text-capitalize" href="#">edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-capitalize"  href="#">download</a>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-2 home-right-menu">
-                    <form method="post" action="/" enctype="multipart/form-data">
+                    <form @submit.prevent="createFile()" enctype="multipart/form-data">
                         <input type="hidden" name="_token" :value="csrf">
-                        <input type="file" name="file" class="btn btn-primary btn-block">
-                        <button class="btn btn-primary btn-block">Upload</button>
+                        <button class="btn btn-primary btn-block" onclick="document.getElementById('file').click();"><i class="fa fa-upload"></i> Upload</button>
+                        <input type="file" @change="createFile" id="file" class="btn btn-primary btn-block">
                     </form>
                 </div>
             </div>
@@ -59,28 +87,80 @@
 </template>
 
 <script>
+    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").slideUp(500);
+    });
     export default {
             data(){
                 return {
+                    file : '',
+                    alert : '',
+                    msg_success : false,
+                    msg_error : false
                 }
             },
             props : ['files', 'csrf'],
             created(){
-            console.log(this.csrf);
+                console.log(this.csrf);
             },
             methods:{
                 fetchFiles(){
                     axios.get('/files').then((res) => {
                         this.files = res.data.files
-                    })
-                    .catch((err) => console.error(err));
+                    }).catch((err) => console.error(err));
                 },
-                deleteFiles(id){
-                    axios.delete('/files/' + id).then((res) => {
-                        this.deleteResponse = res.data.delete;
+                createFile(e){
+                    let formData = new FormData();
+                    formData.append('file', document.getElementById('file').files[0]);
+                    formData.append('_token', this.csrf);
+                    axios.post('/files', formData).then((res) => {
+                        let fileResult = res.data.file;
+                        this.files = fileResult.data;
+                        if(fileResult.type === "fail"){
+                            this.msg_error = true;
+                            this.msg_success = false;
+                        }else{
+                            this.msg_error = false;
+                            this.msg_success = true;
+                        }
+                        this.alert = fileResult.msg;
+                        this.setCounter(fileResult.type);
                         this.fetchFiles();
-                    })
-                    .catch((err) => console.error(err));
+                        document.getElementById('file').value = "";
+                    }).catch((err) => console.error(err));
+                },
+                deleteFile(id){
+                    axios.delete('/files/' + id).then((res) => {
+                        let result = res.data.result;
+                        if(result.type === "fail"){
+                            this.msg_error = true;
+                            this.msg_success = false;
+                        }else{
+                            this.msg_error = false;
+                            this.msg_success = true;
+                        }
+                        this.alert = result.msg;
+                        this.setCounter(result.type);
+                        this.fetchFiles();
+                    }).catch((err) => console.error(err));
+                },
+                setCounter(type){
+                    switch (type){
+                        case 'fail':
+                            setTimeout(function(){
+                                $(".alert-warning").css('display', 'none');
+                            }, 500);
+                            break;
+                        case 'success':
+                            setTimeout(function(){
+                                $(".alert-success").css('display', 'none');
+                            }, 500);
+                            break;
+                        default:
+                            break;
+                    }
+                    $(".alert-success").css('display', '');
+                    $(".alert-warning").css('display', '');
                 }
             },
             mounted(){

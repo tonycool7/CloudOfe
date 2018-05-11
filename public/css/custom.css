@@ -81,6 +81,19 @@ body {
   margin: 0px;
   padding-right: 2pt;
 }
+#file {
+  visibility: hidden;
+}
+.alert-container {
+  height: 60px;
+}
+.alert-container .alert {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  padding-top: 8px;
+  margin: auto;
+}
 .custom-hr {
   width: 100%;
   margin-top: 62pt;

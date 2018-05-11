@@ -143,7 +143,7 @@ class RegisterController extends Controller
             auth()->loginUsingId($user->id);
         }
 
-        Storage::makeDirectory('/public/cloudofe/'.$user->email);
+        exec('mkdir /cloudofe/data/'.$user->email);
         return redirect($this->redirectAfterVerification());
     }
 }

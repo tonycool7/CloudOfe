@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,13 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $files = [
-            [
-                'name' => 'name.txt',
-                'modified' => '04/04/2018 16:00',
-                'members' => '2 members'
-            ]
-        ];
+        $files = \Auth::user()->files;
 
         return view('home', compact('files'));
     }

@@ -12,7 +12,7 @@ class files extends Model
 
     public $fillable = [
         'name',
-        'folder_id',
+        'user_id',
         'type',
         'size',
         'extension'

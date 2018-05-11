@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CloudOfe;
 
-use App\files;
+use http\Exception;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\files;
 
 class FilesController extends Controller
 {
+    private $cloud_path = '/cloudofe/data/';
 
-    public function __construct()
+    function __construct(Request $request)
     {
-        $this->middleware(['auth', 'isVerified']);
+        $this->middleware('auth');
+        $this->middleware('isVerified');
     }
 
     /**
@@ -20,15 +25,11 @@ class FilesController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            ['files' => [
-                [
-                'name' => 'name.txt',
-                'modified' => '04/04/2018 16:00',
-                'members' => '2 members'
-                ]
-            ]]
-        );
+        $files = \Auth::user()->files;
+
+        return response()->json([
+            'files' => $files
+        ]);
     }
 
     /**
@@ -49,16 +50,48 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fileData = $request->all();
+
+        $fileData['name'] = $request->file('file')->getClientOriginalName();
+        $fileData['type'] = $request->file('file')->getClientOriginalExtension();
+        $fileData['size'] = $request->file('file')->getClientSize();
+        $fileData['extension'] = $request->file('file')->getClientOriginalExtension();
+        $fileData['user_id'] = \Auth::id();
+
+
+        if(!file_exists($this->cloud_path.\Auth::user()->email.'/'.$fileData['name'])) {
+            if (move_uploaded_file($request->file('file')->getRealPath(), $this->cloud_path . \Auth::user()->email . '/' . $fileData['name'])) {
+                files::create($fileData);
+            } else {
+                dd('file not uploaded');
+            }
+        }else{
+            return response()->json([
+                'file' => [
+                    'data' => \Auth::user()->files,
+                    'msg' => 'File already exists',
+                    'type' => 'fail'
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'file' => [
+                'data' => \Auth::user()->files,
+                'msg' => 'File created',
+                'type' => 'success'
+                ]
+        ]);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\files  $files
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(files $files)
+    public function show($id)
     {
         //
     }
@@ -66,22 +99,22 @@ class FilesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\files  $files
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(files $files)
+    public function edit($id)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\files  $files
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, files $files)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -89,11 +122,31 @@ class FilesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\files  $files
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(files $files)
+    public function destroy($id)
     {
-        //
+        $responseJson = [];
+        $file = files::findOrFail($id);
+        if(file_exists($this->cloud_path.\Auth::user()->email.'/'.$file->name)){
+            exec('rm -rf '.$this->cloud_path.\Auth::user()->email.'/'.$file->name);
+            $responseJson = response()->json([
+                'result' => [
+                    'type' => 'success',
+                    'msg' => 'File deleted'
+                ]
+            ]);
+        }else{
+            $responseJson = response()->json([
+                'result' => [
+                    'type' => 'fail',
+                    'msg' => 'File doesn \'t exist'
+                    ]
+            ]);
+        }
+
+        files::destroy($id);
+        return $responseJson;
     }
 }
