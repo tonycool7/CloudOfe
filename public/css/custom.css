@@ -4,6 +4,13 @@ body {
 .text-primary {
   color: #426cb4 ! important;
 }
+.new-folder .new-folder-form {
+  width: 80%;
+  display: inline-block;
+}
+.new-folder .new-folder-form input {
+  margin-left: 7px;
+}
 .login-container {
   right: 0px;
   height: 58pt;
@@ -83,6 +90,7 @@ body {
 }
 #file {
   visibility: hidden;
+  position: absolute;
 }
 .alert-container {
   height: 60px;
@@ -184,7 +192,7 @@ footer .footer-container {
   margin-bottom: 18px;
 }
 .home-left-menu {
-  padding: 40px 0px 0px 30px;
+  padding: 40px 0px 0px 65px;
   position: fixed;
   height: 100vh;
   background-color: #F7F9FA;
@@ -208,6 +216,14 @@ footer .footer-container {
 .files-table tr {
   border-bottom: 1px solid #8080802b;
 }
+.files-table tr td span {
+  position: relative;
+  top: -7px;
+  left: 7px;
+}
+.files-table tr td a {
+  text-decoration: none;
+}
 .search-files {
   border-radius: 25px;
   overflow: hidden;
@@ -222,7 +238,7 @@ footer .footer-container {
   display: flex;
 }
 .search-files input {
-  padding: 0;
+  padding: 15px;
   height: 30px;
   border-width: 0;
   color: #000;
@@ -230,6 +246,18 @@ footer .footer-container {
   -ms-flex: 2;
   flex: 2;
   outline: none;
+}
+.fa-user-circle {
+  cursor: pointer;
+}
+.right-menu__menu {
+  list-style: none;
+  padding: 0px;
+  margin-top: 5px;
+}
+.right-menu__menu li {
+  font-size: .9rem;
+  line-height: 2;
 }
 .home-files {
   padding-top: 40px;

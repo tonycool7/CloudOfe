@@ -25,11 +25,11 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $files = \Auth::user()->files;
-
-        return response()->json([
-            'files' => $files
-        ]);
+//        $files = \Auth::user()->files;
+//
+//        return response()->json([
+//            'files' => $files
+//        ]);
     }
 
     /**
@@ -53,6 +53,7 @@ class FilesController extends Controller
         $fileData = $request->all();
 
         $fileData['name'] = $request->file('file')->getClientOriginalName();
+        $fileData['folder_id'] = $request->folder_id;
         $fileData['type'] = $request->file('file')->getClientOriginalExtension();
         $fileData['size'] = $request->file('file')->getClientSize();
         $fileData['extension'] = $request->file('file')->getClientOriginalExtension();
@@ -63,7 +64,13 @@ class FilesController extends Controller
             if (move_uploaded_file($request->file('file')->getRealPath(), $this->cloud_path . \Auth::user()->email . '/' . $fileData['name'])) {
                 files::create($fileData);
             } else {
-                dd('file not uploaded');
+                return response()->json([
+                    'file' => [
+                        'data' => \Auth::user()->files,
+                        'msg' => 'File failed to upload',
+                        'type' => 'fail'
+                    ]
+                ]);
             }
         }else{
             return response()->json([
@@ -78,10 +85,21 @@ class FilesController extends Controller
         return response()->json([
             'file' => [
                 'data' => \Auth::user()->files,
-                'msg' => 'File created',
+                'msg' => 'File Uploaded',
                 'type' => 'success'
                 ]
         ]);
+
+    }
+
+    public function storeFile(Request $request)
+    {
+
+    }
+
+
+    public function storeFolder(Request $request)
+    {
 
     }
 
@@ -93,7 +111,9 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        //
+        $file = files::findOrFail($id);
+
+        return response()->download($this->cloud_path.\Auth::user()->email.'/'.$file->name);
     }
 
     /**

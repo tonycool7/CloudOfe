@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\folder;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -144,6 +145,7 @@ class RegisterController extends Controller
         }
 
         exec('mkdir /cloudofe/data/'.$user->email);
+        folder::create(['name' => $user->email, 'user_id' => $user->id, 'type' => 'folder']);
         return redirect($this->redirectAfterVerification());
     }
 }

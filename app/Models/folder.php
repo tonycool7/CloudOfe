@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class folder extends Model
 {
@@ -17,6 +18,11 @@ class folder extends Model
     ];
 
     public function files(){
-        $this->hasMany(files::class);
+        return $this->hasMany(files::class);
+    }
+
+    public function folders(){
+        return $this->hasMany(folder_in_folder::class, 'parent_folder_id');
     }
 }
+

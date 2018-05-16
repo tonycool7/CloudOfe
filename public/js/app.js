@@ -1756,34 +1756,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-$(".alert").fadeTo(2000, 500).slideUp(500, function () {
-    $(".alert").slideUp(500);
-});
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            file: '',
+            filelist: this.files,
+            folderslist: this.folders,
+            folder_id: this.root_folder_id,
             alert: '',
+            newfolder: false,
             msg_success: false,
+            folderName: '',
             msg_error: false
         };
     },
 
-    props: ['files', 'csrf'],
+    props: ['files', 'csrf', 'root_folder_id', 'folders'],
     created: function created() {
-        console.log(this.csrf);
+        console.log(this.folderslist);
     },
 
     methods: {
         fetchFiles: function fetchFiles() {
             var _this = this;
 
-            axios.get('/files').then(function (res) {
-                _this.files = res.data.files;
+            axios.get('/folder/' + this.folder_id).then(function (res) {
+                console.log(res);
+                _this.filelist = res.data.files.data;
+                _this.folderslist = res.data.folders.data;
+                _this.folder_id = res.data.root_folder_id;
             }).catch(function (err) {
                 return console.error(err);
             });
+        },
+        showNewFolderForm: function showNewFolderForm() {
+            this.newfolder = !this.newfolder;
         },
         createFile: function createFile(e) {
             var _this2 = this;
@@ -1791,9 +1828,10 @@ $(".alert").fadeTo(2000, 500).slideUp(500, function () {
             var formData = new FormData();
             formData.append('file', document.getElementById('file').files[0]);
             formData.append('_token', this.csrf);
+            formData.append('folder_id', this.folder_id);
             axios.post('/files', formData).then(function (res) {
                 var fileResult = res.data.file;
-                _this2.files = fileResult.data;
+                _this2.filelist = fileResult.data;
                 if (fileResult.type === "fail") {
                     _this2.msg_error = true;
                     _this2.msg_success = false;
@@ -1812,18 +1850,52 @@ $(".alert").fadeTo(2000, 500).slideUp(500, function () {
         deleteFile: function deleteFile(id) {
             var _this3 = this;
 
-            axios.delete('/files/' + id).then(function (res) {
-                var result = res.data.result;
-                if (result.type === "fail") {
-                    _this3.msg_error = true;
-                    _this3.msg_success = false;
-                } else {
-                    _this3.msg_error = false;
-                    _this3.msg_success = true;
-                }
-                _this3.alert = result.msg;
-                _this3.setCounter(result.type);
-                _this3.fetchFiles();
+            if (confirm("Are you sure you want to delete this file?")) {
+                axios.delete('/files/' + id).then(function (res) {
+                    var result = res.data.result;
+                    if (result.type === "fail") {
+                        _this3.msg_error = true;
+                        _this3.msg_success = false;
+                    } else {
+                        _this3.msg_error = false;
+                        _this3.msg_success = true;
+                    }
+                    _this3.alert = result.msg;
+                    _this3.setCounter(result.type);
+                    _this3.fetchFiles();
+                }).catch(function (err) {
+                    return console.error(err);
+                });
+            }
+        },
+        deleteFolder: function deleteFolder(id) {
+            var _this4 = this;
+
+            if (confirm("Are you sure you want to delete this folder?")) {
+                axios.delete('/folder/' + id).then(function (res) {
+                    var result = res.data.result;
+                    if (result.type === "fail") {
+                        _this4.msg_error = true;
+                        _this4.msg_success = false;
+                    } else {
+                        _this4.msg_error = false;
+                        _this4.msg_success = true;
+                    }
+                    _this4.alert = result.msg;
+                    _this4.setCounter(result.type);
+                    _this4.fetchFiles();
+                }).catch(function (err) {
+                    return console.error(err);
+                });
+            }
+        },
+        cd: function cd(id) {
+            var _this5 = this;
+
+            axios.get('/folder/' + id).then(function (res) {
+                _this5.filelist = res.data.files.data;
+                _this5.folderslist = res.data.folders.data;
+                _this5.folder_id = res.data.root_folder_id;
             }).catch(function (err) {
                 return console.error(err);
             });
@@ -1833,18 +1905,46 @@ $(".alert").fadeTo(2000, 500).slideUp(500, function () {
                 case 'fail':
                     setTimeout(function () {
                         $(".alert-warning").css('display', 'none');
-                    }, 500);
+                    }, 2000);
                     break;
                 case 'success':
                     setTimeout(function () {
                         $(".alert-success").css('display', 'none');
-                    }, 500);
+                    }, 2000);
                     break;
                 default:
                     break;
             }
             $(".alert-success").css('display', '');
             $(".alert-warning").css('display', '');
+        },
+        download: function download(id) {
+            window.location.replace('/files/' + id);
+        },
+        createNewFolder: function createNewFolder() {
+            var _this6 = this;
+
+            var formData = new FormData();
+            formData.append('name', this.folderName);
+            formData.append('_token', this.csrf);
+            formData.append('folder_id', this.folder_id);
+            axios.post('/folder', formData).then(function (res) {
+                var fileResult = res.data.folders;
+                _this6.folderslist = fileResult.data;
+                if (fileResult.type === "fail") {
+                    _this6.msg_error = true;
+                    _this6.msg_success = false;
+                } else {
+                    _this6.msg_error = false;
+                    _this6.msg_success = true;
+                }
+                _this6.alert = fileResult.msg;
+                _this6.setCounter(fileResult.type);
+                _this6.fetchFiles();
+                _this6.newfolder = false;
+            }).catch(function (err) {
+                return console.error(err);
+            });
         }
     },
     mounted: function mounted() {}
@@ -36449,73 +36549,208 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.files, function(file) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(file.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(file.updated_at))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(file.members))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      staticClass: "dropdown-toggle",
-                      attrs: {
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "dropdown-menu" }, [
+              [
+                _vm.newfolder
+                  ? _c("tr", [
+                      _c("td", { staticClass: "row" }, [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-folder fa-2x text-primary col-sm-1"
+                        }),
+                        _vm._v(" "),
                         _c(
-                          "a",
+                          "form",
                           {
-                            staticClass: "dropdown-item text-capitalize",
-                            attrs: { href: "#" },
+                            staticClass: "col-sm-9 new-folder-form",
                             on: {
-                              click: function($event) {
-                                _vm.deleteFile(file.id)
+                              submit: function($event) {
+                                $event.preventDefault()
+                                _vm.createNewFolder()
                               }
                             }
                           },
-                          [_vm._v("delete")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item text-capitalize",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("share")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item text-capitalize",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("edit")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item text-capitalize",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("download")]
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.folderName,
+                                  expression: "folderName"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              domProps: { value: _vm.folderName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.folderName = $event.target.value
+                                }
+                              }
+                            })
+                          ]
                         )
-                      ])
-                    ]
-                  )
-                ])
-              })
+                      ]),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.folderslist, function(folder) {
+                  return _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.cd(folder.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-folder fa-2x text-primary"
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v(_vm._s(folder.name))])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(folder.updated_at))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(folder.members) + "Only You")]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "dropdown-toggle",
+                        attrs: {
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "dropdown-menu" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteFolder(folder.id)
+                                }
+                              }
+                            },
+                            [_vm._v("delete")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("share")]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.filelist, function(file) {
+                  return _c("tr", [
+                    _c("td", [
+                      _c("i", {
+                        staticClass: "fa fa-file-text fa-2x text-primary"
+                      }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(file.name))])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(file.updated_at))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(file.members) + "Only You")]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "dropdown-toggle",
+                        attrs: {
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "dropdown-menu" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteFile(file.id)
+                                }
+                              }
+                            },
+                            [_vm._v("delete")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("share")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("edit")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "dropdown-divider" }),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item text-capitalize",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.download(file.id)
+                                }
+                              }
+                            },
+                            [_vm._v("download")]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                })
+              ],
+              2
             )
           ])
         ]),
@@ -36538,6 +36773,11 @@ var render = function() {
                 domProps: { value: _vm.csrf }
               }),
               _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "folder_id" },
+                domProps: { value: _vm.folder_id }
+              }),
+              _vm._v(" "),
               _vm._m(4),
               _vm._v(" "),
               _c("input", {
@@ -36546,7 +36786,32 @@ var render = function() {
                 on: { change: _vm.createFile }
               })
             ]
-          )
+          ),
+          _vm._v(" "),
+          _c("ul", { staticClass: "right-menu__menu" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.showNewFolderForm()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-folder-o" }),
+                  _vm._v(" New Folder")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(6)
+          ])
         ])
       ])
     ])
@@ -36567,7 +36832,7 @@ var staticRenderFns = [
       _c("h2", { staticClass: "left-menu__title" }, [_vm._v("Files")]),
       _vm._v(" "),
       _c("div", { staticClass: "left-menu__links" }, [
-        _c("a", { attrs: { href: "/files" } }, [_vm._v("My Files")]),
+        _c("a", { attrs: { href: "/home" } }, [_vm._v("My Files")]),
         _vm._v(" "),
         _c("a", { attrs: { href: "/sharing" } }, [_vm._v("Sharing")]),
         _vm._v(" "),
@@ -36593,7 +36858,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-3" }, [
       _c("form", { staticClass: "search-files" }, [
-        _c("input", { attrs: { type: "text" } })
+        _c("input", { attrs: { placeholder: "search", type: "text" } })
       ])
     ])
   },
@@ -36631,8 +36896,30 @@ var staticRenderFns = [
         staticClass: "btn btn-primary btn-block",
         attrs: { onclick: "document.getElementById('file').click();" }
       },
-      [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Upload")]
+      [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Upload File")]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-share-alt" }),
+        _vm._v(" New Shared Folder")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-eye" }),
+        _vm._v(" Show Deleted Files")
+      ])
+    ])
   }
 ]
 render._withStripped = true
